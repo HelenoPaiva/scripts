@@ -9,10 +9,10 @@ def main():
     cpf = cpf.strip()
 
     # Retira os caracteres errados/desnecessários.
-    ban_char = ["!", "@", "#", "$", "%", "ˆ", "&", "*", "(", ")", "_", "-", "+", "=", ".", ",", "<", ">", "/", "?" "'",
-                "\\", "[", "]","|" "}", "{" '"']
     for char in cpf:
-        if char in ban_char:
+        try:
+            char = int(char)+1
+        except:
             cpf = cpf.replace(char, "")
 
     print("O CPF digitado foi: ", cpf)
@@ -23,28 +23,17 @@ def main():
         print("CPF inválido : quantidade errada de dígitos")
     else:
         # transformando cada dígito em uma variável int.
-        cpf1 = cpf[0]
-        cpf1 = int(cpf1)
-        cpf2 = cpf[1]
-        cpf2 = int(cpf2)
-        cpf3 = cpf[2]
-        cpf3 = int(cpf3)
-        cpf4 = cpf[3]
-        cpf4 = int(cpf4)
-        cpf5 = cpf[4]
-        cpf5 = int(cpf5)
-        cpf6 = cpf[5]
-        cpf6 = int(cpf6)
-        cpf7 = cpf[6]
-        cpf7 = int(cpf7)
-        cpf8 = cpf[7]
-        cpf8 = int(cpf8)
-        cpf9 = cpf[8]
-        cpf9 = int(cpf9)
-        cpfx = cpf[9]
-        cpfx = int(cpfx)
-        cpfy = cpf[10]
-        cpfy = int(cpfy)
+        cpf1 = int(cpf[0])
+        cpf2 = int(cpf[1])
+        cpf3 = int(cpf[2])
+        cpf4 = int(cpf[3])
+        cpf5 = int(cpf[4])
+        cpf6 = int(cpf[5])
+        cpf7 = int(cpf[6])
+        cpf8 = int(cpf[7])
+        cpf9 = int(cpf[8])
+        cpfx = int(cpf[9])
+        cpfy = int(cpf[10])
 
         # testando soma dos dígitos
         list_cpf = [int(i) for i in str(cpf)]
