@@ -1,0 +1,46 @@
+from bs4 import BeautifulSoup
+import requests
+import smtplib
+import time
+
+
+# Essa função checa se está disponível no site.
+# Se não estiver disponível, ela vai seguir repetindo o teste
+# Se estiver disponível ela vai enviar email usando a próxima função
+def check_available():
+    URL = 'https://www.amazon.com.br/dp/B08CWG5K2D'
+    headers ={"User agent": 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36'}
+    page = requests.get(URL, headers=headers)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    #print(soup.prettify())
+    title = soup.find(id="availability").get_text()
+    print(title[4:18])
+    if title[4:18] == "Não disponível":
+        print("Esperando 5 segundos..... - tentando novamente")
+    else:
+        send_email()
+
+
+# Essa função envia email
+# tá configurada para o gmail
+def send_email():
+    # usando smtplib
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    server.ehlo()
+    server.login('SEULOGIN@gmail.com', 'SUASENHA')
+    subject = "PS5 no AMAZON BR!!!"
+    body = "link: https://www.amazon.com.br/dp/B08CWG5K2D"
+    msg = f"Subject: {subject}\n\n{body}"
+    server.sendmail('EMAIL-REMENTENTE', 'EMAIL-DESTINATARIO', msg)
+    print("Email Enviado!!!")
+    server.quit()
+
+# Esse é o loop do bot:
+# vai ficar repetindo
+# fazendo uma pausa de 5 segundos
+while True:
+    time.sleep(5)
+    check_available()
+
